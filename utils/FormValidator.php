@@ -1,5 +1,5 @@
 <?php
-class Validator
+class FormValidator
 {
     private $isAnyError = false;
     private $errors = [];
@@ -36,6 +36,11 @@ class Validator
             $classes .= " is-invalid";
         }
         echo $classes;
+    }
+
+    public function success()
+    {
+        return !$this->isAnyErrors;
     }
 
     public static function checkLength($string, $min = 5, $max = 20)
