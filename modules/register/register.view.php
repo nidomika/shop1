@@ -11,56 +11,114 @@
     <form action="/rejestracja" method="POST">
       <div class="mb-3">
         <label for="Imię">Imię</label>
-        <input class="<?php $formValidator->renderInputClasses($NAME_INPUT); ?>" type="text" id="Imię" name="<?php echo $NAME_INPUT; ?>" placeholder="Imię" autocomplete="given-name">
+        <input 
+          class="<?php $formValidator->renderInputClasses($NAME_INPUT); ?>"
+          type="text"
+          id="Imię"
+          name="<?php echo $NAME_INPUT; ?>"
+          placeholder="Imię"
+          autocomplete="given-name"
+          value="<?php $formValidator->renderValue($NAME_INPUT); ?>"
+        >
         <?php $formValidator->renderError($NAME_INPUT); ?>
       </div>
       <div class="mb-3">
         <label for="Nazwisko">Nazwisko</label>
-        <input class="<?php $formValidator->renderInputClasses($LAST_NAME_INPUT); ?>" type="text" id="Nazwisko" name="<?php echo $LAST_NAME_INPUT; ?>" placeholder="Nazwisko" autocomplete="last-name">
+        <input class="<?php $formValidator->renderInputClasses($LAST_NAME_INPUT); ?>"
+          type="text"
+          id="Nazwisko"
+          name="<?php echo $LAST_NAME_INPUT; ?>"
+          placeholder="Nazwisko"
+          autocomplete="last-name"
+        >
         <?php $formValidator->renderError($LAST_NAME_INPUT); ?>
       </div>
       <div class="mb-3">
         <label for="Login">Login</label>
-        <input class="<?php $formValidator->renderInputClasses($LOGIN_INPUT); ?>" type="text" id="Login" name="<?php echo $LOGIN_INPUT; ?>" placeholder="Login" autocomplete="username">
+        <input class="<?php $formValidator->renderInputClasses($LOGIN_INPUT); ?>"
+          type="text"
+          id="Login"
+          name="<?php echo $LOGIN_INPUT; ?>"
+          placeholder="Login"
+          autocomplete="username"
+        >
         <?php $formValidator->renderError($LOGIN_INPUT); ?>
       </div>    
       <div class="mb-3">
         <label for="Hasło">Hasło</label>
-        <input class="<?php $formValidator->renderInputClasses($PASSWORD_INPUT); ?>" type="password" id="Hasło" name="<?php echo $PASSWORD_INPUT; ?>" placeholder="Hasło" autocomplete="new-password">
+        <input class="<?php $formValidator->renderInputClasses($PASSWORD_INPUT); ?>"
+          type="password"
+          id="Hasło"
+          name="<?php echo $PASSWORD_INPUT; ?>"
+          placeholder="Hasło"
+          autocomplete="new-password"
+        >
         <?php $formValidator->renderError($PASSWORD_INPUT); ?>
       </div>
       <div class="mb-3">
         <label for="Hasło2">Powtórz hasło</label>
-        <input class="<?php $formValidator->renderInputClasses(
-            $PASSWORD2_INPUT
-        ); ?>" type="password" id="Hasło2" name="<?php echo $PASSWORD2_INPUT; ?>" placeholder="Powtórz hasło" autocomplete="new-password">
+        <input class="<?php $formValidator->renderInputClasses($PASSWORD2_INPUT); ?>"
+          type="password"
+          id="Hasło2"
+          name="<?php echo $PASSWORD2_INPUT; ?>"
+          placeholder="Powtórz hasło"
+          autocomplete="new-password"
+        >
         <?php $formValidator->renderError($PASSWORD2_INPUT); ?>
       </div>
       <div class="mb-3">
         <label for="email">Email</label>
-        <input type="text" name="<?php echo $EMAIL_INPUT; ?>" id="email" class="<?php $formValidator->renderInputClasses($EMAIL_INPUT); ?>" placeholder="Email" autocomplete="email">
+        <input type="text"
+          name="<?php echo $EMAIL_INPUT; ?>"
+          id="email"
+          class="<?php $formValidator->renderInputClasses($EMAIL_INPUT); ?>"
+          placeholder="Email"
+          autocomplete="email"
+        >
         <?php $formValidator->renderError($EMAIL_INPUT); ?>
       </div>    
       <div class="mb-3">
         <label for="Ulica">Ulica</label>
-        <input class="<?php $formValidator->renderInputClasses($ADDRESS_INPUT); ?>" type="text" id="Ulica" name="<?php echo $ADDRESS_INPUT; ?>" placeholder="Ulica" autocomplete="street-address">
+        <input class="<?php $formValidator->renderInputClasses($ADDRESS_INPUT); ?>"
+          type="text"
+          id="Ulica"
+          name="<?php echo $ADDRESS_INPUT; ?>"
+          placeholder="Ulica"
+          autocomplete="street-address"
+        >
         <?php $formValidator->renderError($ADDRESS_INPUT); ?>
       </div>
       <div class="mb-3">
         <label for="Miasto">Miasto</label>
-        <input class="<?php $formValidator->renderInputClasses($CITY_INPUT); ?>" type="text" id="Miasto" name="<?php echo $CITY_INPUT; ?>" placeholder="Miasto" autocomplete="address-level2">
+        <input class="<?php $formValidator->renderInputClasses($CITY_INPUT); ?>"
+          type="text"
+          id="Miasto"
+          name="<?php echo $CITY_INPUT; ?>"
+          placeholder="Miasto"
+          autocomplete="address-level2"
+        >
         <?php $formValidator->renderError($CITY_INPUT); ?>
       </div>
       <div class="mb-3">
         <label for="Kod pocztowy">Kod pocztowy</label>
-        <input class="<?php $formValidator->renderInputClasses(
-            $ZIP_CODE_INPUT
-        ); ?>" type="text" id="Kod pocztowy" name="<?php echo $ZIP_CODE_INPUT; ?>" placeholder="XX-XXX" autocomplete="postal-code">
+        <input class="<?php $formValidator->renderInputClasses($ZIP_CODE_INPUT); ?>"
+          type="text"
+          id="Kod pocztowy"
+          name="<?php echo $ZIP_CODE_INPUT; ?>"
+          placeholder="XX-XXX"
+          autocomplete="postal-code"
+        >
         <?php $formValidator->renderError($ZIP_CODE_INPUT); ?>
       </div>
       <div class="mb-3">
         <label for="Kraj">Kraj</label>
-        <input class="<?php $formValidator->renderInputClasses($COUNTRY_INPUT); ?>" type="text" id="Kraj" name="<?php echo $COUNTRY_INPUT; ?>" placeholder="Kraj" autocomplete="country-name">
+        <input class="<?php $formValidator->renderInputClasses($COUNTRY_INPUT); ?>"
+          type="text"
+          id="Kraj"
+          name="<?php echo $COUNTRY_INPUT; ?>"
+          placeholder="Kraj"
+          autocomplete="country-name"
+        >
         <?php $formValidator->renderError($COUNTRY_INPUT); ?>
       </div>
 

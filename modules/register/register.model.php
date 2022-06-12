@@ -1,13 +1,10 @@
 <?php
-require_once "./db.php";
-
 class RegisterModel
 {
     private $db;
 
-    function __construct()
+    function __construct($db)
     {
-        global $db;
         $this->db = $db;
     }
 
@@ -18,5 +15,23 @@ class RegisterModel
         $user = $stmt->fetch();
 
         return $user;
+    }
+
+    public function saveUser($userData, $hobbies)
+    {
+        $stmt = $this->db->prepare(
+            "INSERT INTO `users` (`name`, `last_name`, `email`, `login`, `password`, `address`, `city`, `zip_code`, `country`, `education`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+        );
+
+        $stmt->execute($userData);
+
+        if (isset($hobbies)) {
+            $id = $this->db->lastInsertId();
+            $stmt = $this->db->prepare("INSERT INTO `hobbies` (`user_id`, `hobby`) VALUES (?, ?)");
+
+            foreach ($hobbies as $hobby) {
+                $stmt->execute([$id, $hobby]);
+            }
+        }
     }
 }

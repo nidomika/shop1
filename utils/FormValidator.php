@@ -38,9 +38,18 @@ class FormValidator
         echo $classes;
     }
 
+    public function renderValue($inputName)
+    {
+        if (isset($_POST[$inputName])) {
+            echo $_POST[$inputName];
+        } else {
+            echo "";
+        }
+    }
+
     public function success()
     {
-        return !$this->isAnyErrors;
+        return !$this->isAnyError;
     }
 
     public static function checkLength($string, $min = 5, $max = 20)

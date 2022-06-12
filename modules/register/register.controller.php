@@ -1,6 +1,7 @@
 <?php
+require_once "./db.php";
 require_once "./utils/FormValidator.php";
-require_once "./register/register.model.php";
+require_once "./modules/register/register.model.php";
 
 $NAME_INPUT = "name";
 $LAST_NAME_INPUT = "last_name";
@@ -16,9 +17,9 @@ $EDUCATION_INPUT = "education";
 $HOBBIES_INPUT = "hobbies";
 
 $formValidator = new FormValidator();
-$registerModel = new RegisterModel();
+$registerModel = new RegisterModel($db);
 
-$formValidator->addInput($LOGIN_INPUT, function ($value, &$errors) {
+$formValidator->addInput($LOGIN_INPUT, function ($value, &$errors) use ($registerModel) {
     if (!formValidator::checkLength($value, 5, 30)) {
         $errors[] = "Login powinien mieć między 5 a 30 znaków";
     }
@@ -104,4 +105,24 @@ $formValidator->addInput($COUNTRY_INPUT, function ($value, &$errors) {
     }
 });
 
-include "register.view.php";
+if ($_SERVER["REQUEST_METHOD"] === "POST" && $formValidator->success()) {
+    $registerModel->saveUser(
+        [
+            $_POST[$NAME_INPUT],
+            $_POST[$LAST_NAME_INPUT],
+            $_POST[$EMAIL_INPUT],
+            $_POST[$LOGIN_INPUT],
+            $_POST[$PASSWORD_INPUT],
+            $_POST[$ADDRESS_INPUT],
+            $_POST[$CITY_INPUT],
+            $_POST[$ZIP_CODE_INPUT],
+            $_POST[$COUNTRY_INPUT],
+            $_POST[$EDUCATION_INPUT],
+        ],
+        $_POST[$HOBBIES_INPUT]
+    );
+    header("Location: /");
+    exit();
+} else {
+    include "register.view.php";
+}
