@@ -2,7 +2,7 @@
 require_once "./auth.php";
 require_once "./router.php";
 
-get("/", "views/index.php");
+get("/", "modules/home/home.controller.php");
 
 get("/rejestracja", "modules/register/register.controller.php");
 post("/rejestracja", "modules/register/register.controller.php");
