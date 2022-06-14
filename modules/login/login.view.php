@@ -5,9 +5,9 @@
   <title>Logowanie</title>
 </head>
 <body>
+  <?php require "./layout/navbar.php"; ?>
   <div class="container">
-    <br>
-    <h1 class="mt-8 mb-3">Logowanie</h1>
+    <h1 class="mt-5 mb-3">Logowanie</h1>
     <form action="/logowanie" method="POST">
       <div class="mb-3">
         <label for="Login">Login</label>
@@ -38,6 +38,8 @@
         <?php } ?>
       <button class="btn btn-primary">Zaloguj</button>
     </form>
+    <p class="mt-5">Nie masz konta?</p>
+    <a class="btn btn-outline-primary" href="/rejestracja">Zarejestruj się</a>
   </div>
 </body>
 </html>

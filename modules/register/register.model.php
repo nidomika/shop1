@@ -3,9 +3,9 @@ class RegisterModel
 {
     private $db;
 
-    function __construct($db)
+    function __construct()
     {
-        $this->db = $db;
+        $this->db = $GLOBALS["db"];
     }
 
     public function checkIfUserExists($username)

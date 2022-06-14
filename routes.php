@@ -1,5 +1,6 @@
 <?php
-require_once "{$_SERVER["DOCUMENT_ROOT"]}/router.php";
+require_once "./auth.php";
+require_once "./router.php";
 
 get("/", "views/index.php");
 
@@ -8,5 +9,7 @@ post("/rejestracja", "modules/register/register.controller.php");
 
 get("/logowanie", "modules/login/login.controller.php");
 post("/logowanie", "modules/login/login.controller.php");
+
+get("/wylogowanie", "modules/logout/logout.controller.php");
 
 any("/404", "views/404.php");

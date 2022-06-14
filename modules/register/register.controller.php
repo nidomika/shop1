@@ -1,5 +1,9 @@
 <?php
-require_once "./db.php";
+if ($GLOBALS["isAuth"]) {
+    header("Location: /");
+    exit();
+}
+
 require_once "./utils/FormValidator.php";
 require_once "./modules/register/register.model.php";
 
@@ -17,7 +21,7 @@ $EDUCATION_INPUT = "education";
 $HOBBIES_INPUT = "hobbies";
 
 $formValidator = new FormValidator();
-$registerModel = new RegisterModel($db);
+$registerModel = new RegisterModel();
 
 $formValidator->addInput($LOGIN_INPUT, function ($value, &$errors) use ($registerModel) {
     if (!formValidator::checkLength($value, 5, 30)) {

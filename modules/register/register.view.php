@@ -5,9 +5,9 @@
   <title>Rejestracja użytkownika</title>
 </head>
 <body>
+  <?php require "./layout/navbar.php"; ?>
   <div class="container">
-    <br>
-    <h1 class="mt-8 mb-3">Rejestracja</h1>
+    <h1 class="mt-5 mb-3">Rejestracja</h1>
     <form action="/rejestracja" method="POST">
       <div class="mb-3">
         <label for="Imię">Imię</label>

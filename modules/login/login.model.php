@@ -3,9 +3,9 @@ class LoginModel
 {
     private $db;
 
-    function __construct($db)
+    function __construct()
     {
-        $this->db = $db;
+        $this->db = $GLOBALS["db"];
     }
 
     public function getUserIdByUsernameAndPassword($username, $password)

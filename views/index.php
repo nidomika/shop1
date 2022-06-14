@@ -2,6 +2,7 @@
 <html lang="pl">
 <head></head>
   <?php require "./layout/head.php"; ?>
+  <?php require "./layout/navbar.php"; ?>
   <title>Sklep</title>
 </head>
 <body>
