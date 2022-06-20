@@ -2,48 +2,28 @@
 <html lang="pl">
 <head></head>
   <?php require "./layout/head.php"; ?>
-  <title>uwushop</title>
+  <title><?php echo $GLOBALS["siteName"]; ?></title>
 </head>
 <body>
   <?php require "./layout/navbar.php"; ?>
   <div class="container mt-5">
     <div class="row row-cols-1 row-cols-md-3 g-4">
+    <?php foreach ($products as $product) { ?>
       <div class="col">
         <div class="card">
-          <img src="..." class="card-img-top" alt="...">
+          <img src=<?php echo $product["image_url"]; ?> class="card-img-top" width="300" height="300" alt="...">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <h5 class="card-title"><?php echo $product["name"]; ?></h5>
+            <p><?php echo $product["price"]; ?> PLN</p>
+            <p class="card-text"><?php echo $product["description"]; ?></p>
+            <form method="post" action="/koszyk/dodaj">
+              <input type="hidden" name="productId" value="<?php echo $product["id"]; ?>">
+              <button class="btn btn-primary">Dodaj do koszyka</button>
+            </form>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="..." class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
+    <?php } ?>
     </div>
   </div>
   <?php require "./layout/footer.php"; ?>

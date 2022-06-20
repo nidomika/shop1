@@ -1,4 +1,5 @@
 <?php
+require_once "./config.php";
 require_once "./auth.php";
 require_once "./router.php";
 
@@ -9,6 +10,8 @@ post("/rejestracja", "modules/register/register.controller.php");
 
 get("/logowanie", "modules/login/login.controller.php");
 post("/logowanie", "modules/login/login.controller.php");
+
+get("/koszyk", "modules/cart/cart.controller.php");
 
 get("/wylogowanie", "modules/logout/logout.controller.php");
 

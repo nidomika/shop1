@@ -12,11 +12,14 @@
           } ?>
         </li>
       </ul>
-      <?php if ($GLOBALS["isAuth"]) { ?>
-        <a class="btn btn-outline-success d-flex" href="/wylogowanie">Wyloguj</a>
-      <?php } else { ?>
-        <a class="btn btn-outline-success d-flex" href="/logowanie">Zaloguj</a>
-      <?php } ?>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <?php if ($GLOBALS["isAuth"]) { ?>
+          <a class="btn btn-outline-success" href="/koszyk">Koszyk</a>
+          <a class="btn btn-outline-success" href="/wylogowanie">Wyloguj</a>
+        <?php } else { ?>
+          <a class="btn btn-outline-success" href="/logowanie">Zaloguj</a>        
+        <?php } ?>
+      </div>
     </div>
   </div>
 </nav>

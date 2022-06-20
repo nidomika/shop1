@@ -2,7 +2,7 @@
 <html lang="pl">
 <head></head>
   <?php require "./layout/head.php"; ?>
-  <title>Logowanie</title>
+  <title>Logowanie - <?php echo $GLOBALS["siteName"]; ?></title>
 </head>
 <body>
   <?php require "./layout/navbar.php"; ?>
@@ -18,6 +18,7 @@
           placeholder="Login"
           autocomplete="username"
           class="form-control"
+          autofocus
         >
       </div>    
       <div class="mb-3">

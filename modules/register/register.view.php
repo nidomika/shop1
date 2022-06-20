@@ -2,7 +2,7 @@
 <html lang="pl">
 <head></head>
   <?php require "./layout/head.php"; ?>
-  <title>Rejestracja użytkownika</title>
+  <title>Rejestracja użytkownika - <?php echo $GLOBALS["siteName"]; ?></title>
 </head>
 <body>
   <?php require "./layout/navbar.php"; ?>
