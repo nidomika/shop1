@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head></head>
+<head>
   <?php require "./layout/head.php"; ?>
   <title><?php echo $GLOBALS["siteName"]; ?></title>
 </head>
