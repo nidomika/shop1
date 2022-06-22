@@ -7,6 +7,7 @@
 <body>
   <?php require "./layout/navbar.php"; ?>
   <div class="container mt-5">
+    <h3>Strona główna</h3>
     <div class="row row-cols-1 row-cols-md-3 g-4">
     <?php foreach ($products as $product) { ?>
       <div class="col">
