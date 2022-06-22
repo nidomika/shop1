@@ -1,99 +1,136 @@
 <?php
-session_start();
 
-function get($route, $path_to_include)
+class Route
 {
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        route($route, $path_to_include);
-    }
-}
-function post($route, $path_to_include)
-{
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        route($route, $path_to_include);
-    }
-}
-function put($route, $path_to_include)
-{
-    if ($_SERVER["REQUEST_METHOD"] == "PUT") {
-        route($route, $path_to_include);
-    }
-}
-function patch($route, $path_to_include)
-{
-    if ($_SERVER["REQUEST_METHOD"] == "PATCH") {
-        route($route, $path_to_include);
-    }
-}
-function delete($route, $path_to_include)
-{
-    if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
-        route($route, $path_to_include);
-    }
-}
-function any($route, $path_to_include)
-{
-    route($route, $path_to_include);
-}
-function route($route, $path_to_include)
-{
-    // Callback function
-    if (is_callable($path_to_include)) {
-        call_user_func($path_to_include);
-        exit();
+    private static $routes = [];
+    private static $pathNotFound = null;
+    private static $methodNotAllowed = null;
+
+    /**
+     * Function used to add a new route
+     * @param string $expression    Route string or expression
+     * @param callable $function    Function to call if route with allowed method is found
+     * @param string|array $method  Either a string of allowed method or an array with string values
+     *
+     */
+    public static function add($expression, $function, $method = "get")
+    {
+        array_push(self::$routes, [
+            "expression" => $expression,
+            "function" => $function,
+            "method" => $method,
+        ]);
     }
 
-    $ROOT = $_SERVER["DOCUMENT_ROOT"];
-    if ($route == "/404") {
-        include_once "$ROOT/$path_to_include";
-        exit();
+    public static function getAll()
+    {
+        return self::$routes;
     }
-    $request_url = filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL);
-    $request_url = rtrim($request_url, "/");
-    $request_url = strtok($request_url, "?");
-    $route_parts = explode("/", $route);
-    $request_url_parts = explode("/", $request_url);
-    array_shift($route_parts);
-    array_shift($request_url_parts);
-    if ($route_parts[0] == "" && count($request_url_parts) == 0) {
-        include_once "$ROOT/$path_to_include";
-        exit();
+
+    public static function pathNotFound($function)
+    {
+        self::$pathNotFound = $function;
     }
-    if (count($route_parts) != count($request_url_parts)) {
-        return;
+
+    public static function methodNotAllowed($function)
+    {
+        self::$methodNotAllowed = $function;
     }
-    $parameters = [];
-    for ($__i__ = 0; $__i__ < count($route_parts); $__i__++) {
-        $route_part = $route_parts[$__i__];
-        if (preg_match("/^[$]/", $route_part)) {
-            $route_part = ltrim($route_part, '$');
-            array_push($parameters, $request_url_parts[$__i__]);
-            $$route_part = $request_url_parts[$__i__];
-        } elseif ($route_parts[$__i__] != $request_url_parts[$__i__]) {
-            return;
+
+    public static function run($basepath = "", $case_matters = false, $trailing_slash_matters = false, $multimatch = false)
+    {
+        // The basepath never needs a trailing slash
+        // Because the trailing slash will be added using the route expressions
+        $basepath = rtrim($basepath, "/");
+
+        // Parse current URL
+        $parsed_url = parse_url($_SERVER["REQUEST_URI"]);
+
+        $path = "/";
+
+        // If there is a path available
+        if (isset($parsed_url["path"])) {
+            // If the trailing slash matters
+            if ($trailing_slash_matters) {
+                $path = $parsed_url["path"];
+            } else {
+                // If the path is not equal to the base path (including a trailing slash)
+                if ($basepath . "/" != $parsed_url["path"]) {
+                    // Cut the trailing slash away because it does not matters
+                    $path = rtrim($parsed_url["path"], "/");
+                } else {
+                    $path = $parsed_url["path"];
+                }
+            }
+        }
+
+        $path = urldecode($path);
+
+        // Get current request method
+        $method = $_SERVER["REQUEST_METHOD"];
+
+        $path_match_found = false;
+
+        $route_match_found = false;
+
+        foreach (self::$routes as $route) {
+            // If the method matches check the path
+
+            // Add basepath to matching string
+            if ($basepath != "" && $basepath != "/") {
+                $route["expression"] = "(" . $basepath . ")" . $route["expression"];
+            }
+
+            // Add 'find string start' automatically
+            $route["expression"] = "^" . $route["expression"];
+
+            // Add 'find string end' automatically
+            $route["expression"] = $route["expression"] . '$';
+
+            // Check path match
+            if (preg_match("#" . $route["expression"] . "#" . ($case_matters ? "" : "i") . "u", $path, $matches)) {
+                $path_match_found = true;
+
+                // Cast allowed method to array if it's not one already, then run through all methods
+                foreach ((array) $route["method"] as $allowedMethod) {
+                    // Check method match
+                    if (strtolower($method) == strtolower($allowedMethod)) {
+                        array_shift($matches); // Always remove first element. This contains the whole string
+
+                        if ($basepath != "" && $basepath != "/") {
+                            array_shift($matches); // Remove basepath
+                        }
+
+                        if ($return_value = call_user_func_array($route["function"], $matches)) {
+                            echo $return_value;
+                        }
+
+                        $route_match_found = true;
+
+                        // Do not check other routes
+                        break;
+                    }
+                }
+            }
+
+            // Break the loop if the first found route is a match
+            if ($route_match_found && !$multimatch) {
+                break;
+            }
+        }
+
+        // No matching route was found
+        if (!$route_match_found) {
+            // But a matching path exists
+            if ($path_match_found) {
+                if (self::$methodNotAllowed) {
+                    call_user_func_array(self::$methodNotAllowed, [$path, $method]);
+                }
+            } else {
+                if (self::$pathNotFound) {
+                    call_user_func_array(self::$pathNotFound, [$path]);
+                }
+            }
         }
     }
-    include_once "$ROOT/$path_to_include";
-    exit();
-}
-function out($text)
-{
-    echo htmlspecialchars($text);
-}
-function set_csrf()
-{
-    if (!isset($_SESSION["csrf"])) {
-        $_SESSION["csrf"] = bin2hex(random_bytes(50));
-    }
-    echo '<input type="hidden" name="csrf" value="' . $_SESSION["csrf"] . '">';
-}
-function is_csrf_valid()
-{
-    if (!isset($_SESSION["csrf"]) || !isset($_POST["csrf"])) {
-        return false;
-    }
-    if ($_SESSION["csrf"] != $_POST["csrf"]) {
-        return false;
-    }
-    return true;
 }
