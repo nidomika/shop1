@@ -26,9 +26,9 @@ Route::add(
                 exit();
             }
             $loginError = true;
-            include "login.view.php";
+            require "./views/login.php";
         } else {
-            include "login.view.php";
+            require "./views/login.php";
         }
     },
     ["get", "post"]

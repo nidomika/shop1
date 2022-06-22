@@ -131,7 +131,7 @@ Route::add(
             header("Location: /");
             exit();
         } else {
-            include "register.view.php";
+            require "./views/register.php";
         }
     },
     ["get", "post"]

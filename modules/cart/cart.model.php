@@ -1,5 +1,6 @@
 <?php
 require_once "./modules/products/products.model.php";
+
 class CartModel
 {
     private $db;
@@ -30,7 +31,7 @@ class CartModel
                 $newQuantity = $quantityOnStock;
             }
 
-            $stmt = this->db->prepare("UPDATE carts SET quantity = ? WHERE user_id = ? AND product_id = ?");
+            $stmt = $this->db->prepare("UPDATE carts SET quantity = ? WHERE user_id = ? AND product_id = ?");
             $stmt->execute([$newQuantity, $GLOBALS["currentUser"]["id"], $productId]);
         } else {
             $stmt = $this->db->prepare("INSERT INTO carts (user_id, product_id, quantity) VALUES (?, ?, ?)");
@@ -41,9 +42,11 @@ class CartModel
     public function removeProduct($productId, $quantity)
     {
         $productInCart = $this->getProductById($productId);
+        var_dump($productInCart);
+        var_dump($productId);
         $newQuantity = intval($productInCart["quantity"]) - intval($quantity);
         if ($newQuantity > 0) {
-            $stmt = this->db->prepare("UPDATE carts SET quantity = ? WHERE user_id = ? AND product_id = ?");
+            $stmt = $this->db->prepare("UPDATE carts SET quantity = ? WHERE user_id = ? AND product_id = ?");
             $stmt->execute([$newQuantity, $GLOBALS["currentUser"]["id"], $productId]);
         } else {
             $stmt = $this->db->prepare("DELETE FROM carts WHERE user_id = ? AND product_id = ?");

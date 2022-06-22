@@ -41,6 +41,10 @@
                     disabled
                   > -->
                 <!-- </div> -->
+                <form action="/koszyk/usun" method="post">
+                  <input type="hidden" name="productId" value="<?php echo $product["product_id"]; ?>">
+                  <button class="btn btn-danger">Usuń produkt</button>
+                </form>
               </div>
             </div>
           </div>
@@ -55,7 +59,7 @@
               <p class="card-text">Dostawa: <?php echo $delivery; ?> PLN</p>
               <hr>
               <p class="card-text">Suma: <?php echo $total + $delivery; ?> PLN</p>
-              <form method="post" action="/zamow">
+              <form method="post" action="/koszyk/podsumowanie">
                 <input type="hidden" name="productsInCart" value="<?php $products; ?>">
                 <div class="d-grid gap-2">
                   <button class="btn btn-primary">Przejdź do finalizacji zamówienia</button>
