@@ -50,12 +50,12 @@ Route::add(
             require "./views/401.php";
             exit();
         }
-        $to = "tapoqgkulujbagkrgd@kvhrw.com";
-        $subject = "subject";
-        $message = "message";
-        $headers = "From: webmaster@example.com" . "\r\n" . "X-Mailer: PHP/" . phpversion();
+        // $to = "tapoqgkulujbagkrgd@kvhrw.com";
+        // $subject = "subject";
+        // $message = "message";
+        // $headers = "From: webmaster@example.com" . "\r\n" . "X-Mailer: PHP/" . phpversion();
 
-        mail($to, $subject, $message, $headers);
+        // mail($to, $subject, $message, $headers);
 
         require "./views/finalize.php";
     },
