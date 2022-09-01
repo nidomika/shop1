@@ -50,14 +50,19 @@ Route::add(
             require "./views/401.php";
             exit();
         }
-        // $to = "tapoqgkulujbagkrgd@kvhrw.com";
-        // $subject = "subject";
-        // $message = "message";
-        // $headers = "From: webmaster@example.com" . "\r\n" . "X-Mailer: PHP/" . phpversion();
+        $cartModel = new CartModel();
+        $products = $cartModel->getAllFromCart();
 
-        // mail($to, $subject, $message, $headers);
+        $orderNumber = $cartModel->saveOrder();
+
+        $to = $GLOBALS["deliverOrderMail"];
+        $subject = "Zamowienie nr " . $orderNumber;
+        $message = $cartModel->parseCartToText();
+        $headers = "From: sklep@uwushop.com" . "\r\n" . "X-Mailer: PHP/" . phpversion();
+        mail($to, $subject, $message, $headers);
 
         require "./views/finalize.php";
+        $cartModel->removeAllFromCart();
     },
     "post"
 );

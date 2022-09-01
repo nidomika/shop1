@@ -13,7 +13,7 @@
         <?php if (count($products) == 0) { ?>
           <p class="lead">Twój koszyk jest pusty!</p>
           <br>
-          <button class="btn btn-primary">Przejdź do strony głównej</button>
+          <a href="/" class="btn btn-primary">Przejdź do strony głównej</a>
         <?php } else {foreach ($products as $product) { ?>
         <div class="card mb-3">
           <div class="row g-0">
@@ -73,7 +73,7 @@
               <form method="post" action="/koszyk/podsumowanie">
                 <input type="hidden" name="productsInCart" value="<?php $products; ?>">
                 <div class="d-grid gap-2">
-                  <button class="btn btn-primary">Przejdź do finalizacji zamówienia</button>
+                  <button class="btn btn-primary">Zamów</button>
                 </div>
               </form>
             </div>

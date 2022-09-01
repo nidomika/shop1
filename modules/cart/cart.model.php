@@ -42,8 +42,6 @@ class CartModel
     public function removeProduct($productId, $quantity)
     {
         $productInCart = $this->getProductById($productId);
-        var_dump($productInCart);
-        var_dump($productId);
         $newQuantity = intval($productInCart["quantity"]) - intval($quantity);
         if ($newQuantity > 0) {
             $stmt = $this->db->prepare("UPDATE carts SET quantity = ? WHERE user_id = ? AND product_id = ?");
@@ -73,5 +71,43 @@ class CartModel
             $total += $product["price"] * $product["quantity_in_cart"];
         }
         return $total;
+    }
+
+    public function removeAllFromCart()
+    {
+        $stmt = $this->db->prepare("DELETE FROM carts WHERE user_id = ?");
+        $stmt->execute([$GLOBALS["currentUser"]["id"]]);
+    }
+
+    public function saveOrder()
+    {
+        $orderNumber = rand(100000000, 999999999);
+        $stmt = $this->db->prepare("INSERT INTO orders (user_id, product_id, quantity, order_no) SELECT user_id, product_id, quantity, ? FROM carts WHERE user_id = ?");
+        $stmt->execute([$orderNumber, $GLOBALS["currentUser"]["id"]]);
+        return $orderNumber;
+    }
+
+    public function parseCartToText()
+    {
+        $products = $this->getAllFromCart();
+        $text = "";
+        foreach ($products as $product) {
+            $text .= $product["name"] . " sztuk: " . $product["quantity_in_cart"] . "\n";
+        }
+
+        $text .=
+            "\n Wysyłka do: \n" .
+            $GLOBALS["currentUser"]["name"] .
+            " " .
+            $GLOBALS["currentUser"]["last_name"] .
+            "\n" .
+            $GLOBALS["currentUser"]["address"] .
+            "\n" .
+            $GLOBALS["currentUser"]["zip_code"] .
+            " " .
+            $GLOBALS["currentUser"]["city"] .
+            "\n";
+
+        return $text;
     }
 }
