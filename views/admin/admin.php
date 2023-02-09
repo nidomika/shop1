@@ -8,6 +8,7 @@
   <?php require "./layout/navbar.php"; ?>
   <div class="container mt-5">
     <h3>Panel administratora</h3>
+     <a class="btn btn-primary my-3" href="/admin/produkt/dodaj">Dodaj nowy produkt</a>
     <div class="row row-cols-1 row-cols-md-3 g-4">
     <?php foreach ($products as $product) { ?>
       <div class="col">
@@ -18,7 +19,9 @@
             <p><?php echo $product["price"]; ?> PLN</p>
             <p class="card-text"><?php echo $product["description"]; ?></p>
             <p class="card-text">Stan na magazynie: <?php echo $product["quantity"]; ?></p>
-            <a href="/admin/product/<?php echo $product["id"]; ?>">Edytuj</a>
+            <a class="btn btn-primary" href="/admin/produkt/<?php echo $product["id"]; ?>">Edytuj</a>
+            <a class="btn btn-danger" href="/admin/produkt/usun">Usuń</a>
+
           </div>
         </div>
       </div>
