@@ -27,20 +27,6 @@
                 <p class="card-text">Cena: <?php echo $product["price"]; ?> PLN </p>
                 <p class="card-text">Suma: <?php echo floatval($product["price"]) * intval($product["quantity_in_cart"]); ?> PLN</p>
                 <p class="card-text">Sztuk: <?php echo $product["quantity_in_cart"]; ?></p>
-                <!-- <div class="input-group">
-                <span class="input-group-text" id="basic-addon1">Sztuk: </span> -->
-                  <!-- <label for="product-quantity" class="form-label">Liczba sztuk</label> -->
-                  <!-- <input 
-                    class="form-control" 
-                    id="product-quantity" 
-                    value=""
-                    min="1" 
-                    max="<?php echo $product["quantity_on_stock"]; ?>"
-                    type="number"
-                    required
-                    disabled
-                  > -->
-                <!-- </div> -->
                 <form action="/koszyk/usun" method="post">
                   <input type="hidden" name="productId" value="<?php echo $product["product_id"]; ?>">
                   <button class="btn btn-danger">Usuń produkt</button>

@@ -20,7 +20,9 @@
             <p class="card-text"><?php echo $product["description"]; ?></p>
             <p class="card-text">Stan na magazynie: <?php echo $product["quantity"]; ?></p>
             <a class="btn btn-primary" href="/admin/produkt/<?php echo $product["id"]; ?>">Edytuj</a>
-            <a class="btn btn-danger" href="/admin/produkt/usun">Usuń</a>
+            <form class="d-inline" method="post" action="/admin/produkt/usun/<?php echo $product["id"]; ?>" onsubmit="return confirm('Czy na pewno chcesz usunąć ten produkt: <?php echo $product["name"]; ?>?')">
+              <button class="btn btn-danger">Usuń</button>
+            </form>
 
           </div>
         </div>

@@ -42,11 +42,6 @@ Route::add(
         $productsModel = new ProductsModel();
         $productsModel->editProduct(array_values($_POST));
 
-        // if (!$product) {
-        //     require "./views/404.php";
-        //     exit();
-        // }
-
         header("Location: /admin");
         exit();
 
@@ -81,10 +76,8 @@ Route::add(
     "post"
 );
 
-// TO DO
-
 Route::add(
-    "/admin/produkt/usun",
+    "/admin/produkt/usun/([0-9]*)",
     function ($productId) {
         if (!$GLOBALS["isAuth"] || !$GLOBALS["currentUser"]["is_admin"]) {
             require "./views/401.php";

@@ -10,7 +10,16 @@ class ProductsModel
 
     public function getAllProducts()
     {
-        $stmt = $this->db->prepare("SELECT * FROM products");
+        $stmt = $this->db->prepare("SELECT * FROM products WHERE deleted = 0");
+        $stmt->execute();
+        $products = $stmt->fetchAll();
+
+        return $products;
+    }
+
+    public function getAllProductsInStock()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM products WHERE deleted = 0 AND quantity > 0");
         $stmt->execute();
         $products = $stmt->fetchAll();
 
@@ -43,7 +52,7 @@ class ProductsModel
 
     public function removeProduct($productId)
     {
-        $stmt = $this->db->prepare("DELETE FROM products WHERE id = ?");
+        $stmt = $this->db->prepare("UPDATE products SET deleted = 1 WHERE id = ?");
         $stmt->execute([$productId]);
         $product = $stmt->fetch();
         return $product;

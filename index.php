@@ -8,6 +8,7 @@ require_once "./modules/login/login.controller.php";
 require_once "./modules/logout/logout.controller.php";
 require_once "./modules/register/register.controller.php";
 require_once "./modules/admin/admin.controller.php";
+require_once "./modules/orders/orders.controller.php";
 
 Route::pathNotFound(function ($path) {
     include "views/404.php";
