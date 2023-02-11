@@ -35,7 +35,7 @@ Route::add(
 );
 
 Route::add(
-    "/zamowienia/([0-9]*/zakoncz)",
+    "/zamowienia/([0-9]*)/zakoncz",
     function ($orderNo) {
         if (!$GLOBALS["isAuth"] || !$GLOBALS["currentUser"]["is_admin"]) {
             require "./views/401.php";
