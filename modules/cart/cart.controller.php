@@ -24,6 +24,7 @@ Route::add(
         }
         $cartModel = new CartModel();
         $cartModel->addProduct($_POST["productId"], 1);
+
         header("Location: /koszyk");
     },
     "post"
@@ -38,6 +39,7 @@ Route::add(
         }
         $cartModel = new CartModel();
         $cartModel->removeProduct($_POST["productId"], 1);
+
         header("Location: /koszyk");
     },
     "post"

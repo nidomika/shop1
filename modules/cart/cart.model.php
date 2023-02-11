@@ -50,6 +50,8 @@ class CartModel
             $stmt = $this->db->prepare("DELETE FROM carts WHERE user_id = ? AND product_id = ?");
             $stmt->execute([$GLOBALS["currentUser"]["id"], $productId]);
         }
+        $stmt2 = $this->db->prepare("UPDATE products SET quantity = quantity + 1 WHERE id = ?");
+        $stmt2->execute($productId);
     }
 
     public function getAllFromCart()
@@ -82,8 +84,12 @@ class CartModel
     public function saveOrder()
     {
         $orderNumber = rand(100000000, 999999999);
-        $stmt = $this->db->prepare("INSERT INTO orders (user_id, product_id, quantity, order_no) SELECT user_id, product_id, quantity, ? FROM carts WHERE user_id = ?");
-        $stmt->execute([$orderNumber, $GLOBALS["currentUser"]["id"]]);
+        $stmt = $this->db->prepare("INSERT INTO orders_products (product_id, quantity, order_no) SELECT product_id, quantity, ? FROM carts");
+        $stmt->execute([$orderNumber]);
+
+        $total = $this->getTotalSum();
+        $stmt2 = $this->db->prepare("INSERT INTO orders (order_no, user_id, total) VALUES (?, ?, ?)");
+        $stmt2->execute([$orderNumber, $GLOBALS["currentUser"]["id"], $total]);
         return $orderNumber;
     }
 
