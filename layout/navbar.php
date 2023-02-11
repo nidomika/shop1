@@ -15,6 +15,7 @@
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <?php if ($GLOBALS["isAuth"]) {
             if ($GLOBALS["currentUser"]["is_admin"]) { ?>
+            <a class="btn btn-outline-success" href="/zamowienia">Zamówienia</a>
             <a class="btn btn-outline-success" href="/admin">Panel administratora</a>
          <?php } ?>
           <a class="btn btn-outline-success" href="/koszyk">Koszyk</a>

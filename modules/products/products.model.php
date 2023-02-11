@@ -31,6 +31,7 @@ class ProductsModel
         $stmt = $this->db->prepare("SELECT * FROM products WHERE id = ?");
         $stmt->execute([$productId]);
         $product = $stmt->fetch();
+
         return $product;
     }
 
@@ -38,23 +39,26 @@ class ProductsModel
     {
         $stmt = $this->db->prepare("INSERT INTO products (name, price, description, image_url, quantity) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute($values);
-        $product = $stmt->fetch();
-        return $product;
+        $add = $stmt->fetch();
+
+        return $add;
     }
 
     public function editProduct($values)
     {
         $stmt = $this->db->prepare("UPDATE products SET name = ?, price = ?, description = ?, image_url = ?, quantity = ? WHERE id = ?");
         $stmt->execute($values);
-        $product = $stmt->fetch();
-        return $product;
+        $edit = $stmt->fetch();
+
+        return $edit;
     }
 
     public function removeProduct($productId)
     {
         $stmt = $this->db->prepare("UPDATE products SET deleted = 1 WHERE id = ?");
         $stmt->execute([$productId]);
-        $product = $stmt->fetch();
-        return $product;
+        $delete = $stmt->fetch();
+
+        return $delete;
     }
 }

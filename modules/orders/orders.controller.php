@@ -26,9 +26,27 @@ Route::add(
         }
 
         $ordersModel = new OrdersModel();
-        $orders = $ordersModel->getOrderByNo($orderNo);
+        $order = $ordersModel->getOrderDetailsByNo($orderNo);
+        $products = $ordersModel->getOrderProducts($orderNo);
 
-        require "./views/orders.php";
+        require "./views/order.php";
     },
     "get"
+);
+
+Route::add(
+    "/zamowienia/([0-9]*/zakoncz)",
+    function ($orderNo) {
+        if (!$GLOBALS["isAuth"] || !$GLOBALS["currentUser"]["is_admin"]) {
+            require "./views/401.php";
+            exit();
+        }
+
+        $ordersModel = new OrdersModel();
+        $order = $ordersModel->finalizeOrder($orderNo);
+
+        header("Location: /zamowienia");
+        exit();
+    },
+    "post"
 );
