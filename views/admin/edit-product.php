@@ -11,11 +11,11 @@
     <h6>id produktu: <?php echo $product["id"]; ?></h6>
     <div class="mb-3">
       <label for="name" class="form-label">Nazwa</label>
-      <input type="text" class="form-control" id="name" name="name" value="<?php echo $product["name"]; ?>"required>
+      <input type="text" class="form-control" id="name" name="name" value="<?php echo $product["name"]; ?>" required>
     </div>
     <div class="mb-3">
       <label for="price" class="form-label">Cena</label>
-      <input type="number" class="form-control" id="price" name="price" value="<?php echo $product["price"]; ?>">
+      <input type="number" class="form-control" id="price" name="price" value="<?php echo $product["price"]; ?>" required>
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Opis</label>
@@ -27,7 +27,7 @@
     </div>
     <div class="mb-3">
       <label for="quantity" class="form-label">Stan na magazynie</label>
-      <input type="number" class="form-control" id="quantity" name="quantity" value="<?php echo $product["quantity"]; ?>">
+      <input type="number" class="form-control" id="quantity" name="quantity" value="<?php echo $product["quantity"]; ?>" step="1" min="0" required>
     </div>
     
     <input type="text" id="id" value="<?php echo $product["id"]; ?>" name="id" hidden>
