@@ -10,7 +10,7 @@
     <h1>Zamówienia</h1>
      <div class="row">
     <?php foreach ($orders as $order) { ?>
-      <div class="card">
+      <div class="card my-2">
         <div class="card-body">
           <h5 class="card-title">Zamówienie nr <?php echo $order["order_no"]; ?></h5>
           <p class="card-text">Wartość: <?php echo $order["total"]; ?> PLN</p>

@@ -10,7 +10,8 @@ Route::add("/koszyk", function () {
     $cartModel = new CartModel();
     $products = $cartModel->getAllFromCart();
     $total = $cartModel->getTotalSum();
-    $delivery = number_format("10", 2);
+    $deliveryCost = $cartModel->deliveryCost;
+    $totalWithDelivery = $cartModel->getTotalSumWithDelivery();
 
     require "./views/cart.php";
 });

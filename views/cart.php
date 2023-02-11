@@ -53,12 +53,13 @@
             <div class="card-body">
               <h5 class="card-title">Podsumowanie</h5>
               <p class="card-text">Wartość zamówienia: <?php echo $total; ?> PLN</p>
-              <p class="card-text">Dostawa: <?php echo $delivery; ?> PLN</p>
+              <p class="card-text">Dostawa: <?php echo $deliveryCost; ?> PLN</p>
               <hr>
-              <p class="card-text">Suma: <?php echo $total + $delivery; ?> PLN</p>
+              <p class="card-text">Suma: <?php echo $totalWithDelivery; ?> PLN</p>
               <form method="post" action="/koszyk/podsumowanie">
                 <input type="hidden" name="productsInCart" value="<?php $products; ?>">
                 <div class="d-grid gap-2">
+                  <a class="btn btn-secondary" href="/">Kontynuuj zakupy</a>
                   <button class="btn btn-primary">Zamów</button>
                 </div>
               </form>

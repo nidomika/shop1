@@ -5,9 +5,11 @@ class CartModel
 {
     private $db;
     private $productsModel;
+    public $deliveryCost;
 
     function __construct()
     {
+        $this->deliveryCost = number_format("10", 2);
         $this->db = $GLOBALS["db"];
         $this->productsModel = new ProductsModel();
     }
@@ -72,7 +74,15 @@ class CartModel
         foreach ($allProductsInCart as $product) {
             $total += $product["price"] * $product["quantity_in_cart"];
         }
+
         return $total;
+    }
+
+    public function getTotalSumWithDelivery()
+    {
+        $total = $this->getTotalSum();
+
+        return $total + $this->deliveryCost;
     }
 
     public function removeAllFromCart()
@@ -84,12 +94,17 @@ class CartModel
     public function saveOrder()
     {
         $orderNumber = rand(100000000, 999999999);
-        $stmt = $this->db->prepare("INSERT INTO orders_products (product_id, quantity, order_no) SELECT product_id, quantity, ? FROM carts");
-        $stmt->execute([$orderNumber]);
+        $total = $this->getTotalSumWithDelivery();
+        $products = $this->getAllFromCart();
 
-        $total = $this->getTotalSum();
-        $stmt2 = $this->db->prepare("INSERT INTO orders (order_no, user_id, total) VALUES (?, ?, ?)");
-        $stmt2->execute([$orderNumber, $GLOBALS["currentUser"]["id"], $total]);
+        foreach ($products as $product) {
+            $stmt2 = $this->db->prepare("INSERT INTO orders_products (product_id, quantity, order_no) VALUES (?, ?, ?)");
+            $stmt2->execute([$product["product_id"], $product["quantity_in_cart"], $orderNumber]);
+        }
+
+        $stmt = $this->db->prepare("INSERT INTO orders (order_no, user_id, total) VALUES (?, ?, ?)");
+        $stmt->execute([$orderNumber, $GLOBALS["currentUser"]["id"], $total]);
+
         return $orderNumber;
     }
 

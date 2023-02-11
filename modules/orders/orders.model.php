@@ -10,7 +10,7 @@ class OrdersModel
 
     public function getAllOrders()
     {
-        $stmt = $this->db->prepare("SELECT * FROM orders");
+        $stmt = $this->db->prepare("SELECT * FROM orders ORDER BY date_ordered DESC");
         $stmt->execute();
         $orders = $stmt->fetchAll();
 
